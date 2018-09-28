@@ -59,7 +59,7 @@ class MoviesController < ApplicationController
   end
   
   def chosen
-    #determine selected ratings
+    #fill chosen ratings object
     if params[:ratings]
         params[:ratings].keys
     else
