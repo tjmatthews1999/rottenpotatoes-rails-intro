@@ -58,8 +58,8 @@ class MoviesController < ApplicationController
   
   def chosen
     #determine selected ratings
-    if params(:ratingslist)
-        params(:ratingslist).keys
+    if params(:ratings)
+        params(:ratings).keys
     else
         Movie.ratings
     end
