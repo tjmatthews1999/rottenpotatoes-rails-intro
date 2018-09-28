@@ -11,16 +11,24 @@ class MoviesController < ApplicationController
   end
 
   def index
+    #determine selected ratings
+    if params[:ratings]
+        @chosen_ratings = params[:ratings].keys
+    else
+        @chosen_ratings = Movie.ratings
+    end
+    
+    
     #order movies and highlight the header indicated by the clicked parameter
     case params[:clicked]
     when 'title'
         @is_title_hilite = "hilite"
-        @movies = Movie.order('title')
+        @movies = Movie.where(rating: @chosen_ratings).order('title')
     when'release'
         @is_release_hilite = "hilite"
-        @movies = Movie.order('release_date')
+        @movies = Movie.where(rating: @chosen_ratings).order('release_date')
     else
-        @movies = Movie.all
+        @movies = Movie.where(rating: @chosen_ratings)
     end
     
   end
