@@ -60,8 +60,8 @@ class MoviesController < ApplicationController
     private
     def chosen
     #determine selected ratings
-    if params[:ratings]
-        params[:ratings].keys
+    if ratings
+        ratings.keys
     else
         Movie.ratings
     end
