@@ -12,8 +12,8 @@ class MoviesController < ApplicationController
 
   def index
     #determine selected ratings
-    if params[:ratings]
-        @chosen_ratings = params[:ratings].keys
+    if ratings
+        @chosen_ratings = ratings.keys
     else
         @chosen_ratings = Movie.ratings
     end
