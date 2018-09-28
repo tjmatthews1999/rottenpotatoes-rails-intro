@@ -11,6 +11,7 @@ class MoviesController < ApplicationController
   end
 
   def index
+    @all_ratings = Movie.ratings
     #assign variable to method result
     @chosen_ratings = chosen
     
