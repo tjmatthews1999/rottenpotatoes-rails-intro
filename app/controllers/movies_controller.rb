@@ -11,6 +11,7 @@ class MoviesController < ApplicationController
   end
 
   def index
+    #fill all_ratings with all possible ratings
     @all_ratings = Movie.ratings
     #assign variable to method result
     @chosen_ratings = chosen
@@ -62,7 +63,7 @@ class MoviesController < ApplicationController
     if params[:ratings]
         params[:ratings].keys
     else
-        Movie.ratings
+        @all_ratings
     end
   end
 end
