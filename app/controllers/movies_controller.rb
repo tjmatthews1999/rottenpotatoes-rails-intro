@@ -57,8 +57,7 @@ class MoviesController < ApplicationController
     redirect_to movies_path
   end
   
-    private
-    def chosen
+  def chosen
     #determine selected ratings
     if params[:ratings]
         params[:ratings].keys
