@@ -11,13 +11,8 @@ class MoviesController < ApplicationController
   end
 
   def index
-    #determine selected ratings
-    if ratings
-        @chosen_ratings = ratings.keys
-    else
-        @chosen_ratings = Movie.ratings
-    end
-    
+    #assign variable to method result
+    @chosen_ratings = chosen
     
     #order movies and highlight the header indicated by the clicked parameter
     case params[:clicked]
@@ -60,5 +55,13 @@ class MoviesController < ApplicationController
     flash[:notice] = "Movie '#{@movie.title}' deleted."
     redirect_to movies_path
   end
+  
+  def chosen
+    #determine selected ratings
+    if ratings
+        ratings.keys
+    else
+        Movie.ratings
+    end
 
 end
