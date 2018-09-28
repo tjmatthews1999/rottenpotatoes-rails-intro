@@ -14,10 +14,10 @@ class MoviesController < ApplicationController
     #order movies and highlight the header indicated by the clicked parameter
     case params[:clicked]
     when 'title'
-        @is_title_highlite = "highlite"
+        @is_title_hilite = "hilite"
         @movies = Movie.order('title')
     when'release'
-        @is_release_highlite = "highlite"
+        @is_release_hilite = "hilite"
         @movies = Movie.order('release')
     else
         @movies = Movie.all
