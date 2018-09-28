@@ -63,5 +63,5 @@ class MoviesController < ApplicationController
     else
         Movie.ratings
     end
-
+  end
 end
