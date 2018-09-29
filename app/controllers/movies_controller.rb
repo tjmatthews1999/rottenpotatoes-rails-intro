@@ -13,40 +13,48 @@ class MoviesController < ApplicationController
   def index
     #fill all_ratings with all possible ratings
     @all_ratings = Movie.ratings
-    #assign variable to method result
    
-        
+    #chosen_ratings is final parameter used for determining which ratings to include in list
+    #logic below determines whether to fill that variable with current parameters or from session
     if chosen != nil
+        #parameters exist currently, so save them into session and chosen_ratings
         session[:ratings] = chosen
         @chosen_ratings = session[:ratings]
     else
         if session[:ratings] 
-            @chosen_ratings = session[:ratings]
+           #no parameters (all ratings unchecked), so fill from session if there is a value in it
+           @chosen_ratings = session[:ratings]
         else
+            #no checked boxes and no session records, so default to checking all
             @chosen_ratings = @all_ratings
         end
     end
     
     
-    #order movies and highlight the header indicated by the clicked parameter
+    #store values in session that save which column to hilite and sort by
     case params[:clicked]
     when 'title'
         session[:is_title_hilite] = "hilite"
+        #make sure to remove hilite from other header in session
         session[:is_release_hilite] = ""
         session[:clicked] = 'title'
     when'release'
         session[:is_release_hilite] = "hilite"
+        #make sure to remove hilite from other header in session
         session[:is_title_hilite] = ""
         session[:clicked] = 'release_date'
     end
     
+    #if no session record exists to indicate sort column, default to sorting by movie id
     if not session[:clicked]
         session[:clicked] = 'id'
     end
     
+    #apply session values to current variables
     @is_title_hilite = session[:is_title_hilite]
     @is_release_hilite = session[:is_release_hilite]
     
+    #final movie list sort by column and/or ratings
     @movies = Movie.where(rating: @chosen_ratings).order(session[:clicked])
   end
 
@@ -79,7 +87,7 @@ class MoviesController < ApplicationController
   end
   
   def chosen
-    #fill chosen ratings object
+    #determine if there are active rating parameters and return them if there are
     if params[:ratings]
         params[:ratings].keys
     else
