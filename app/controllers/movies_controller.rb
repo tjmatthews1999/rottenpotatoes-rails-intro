@@ -14,20 +14,38 @@ class MoviesController < ApplicationController
     #fill all_ratings with all possible ratings
     @all_ratings = Movie.ratings
     #assign variable to method result
-    @chosen_ratings = chosen
+   
+        
+    if chosen != nil
+        session[:ratings] = chosen
+        @chosen_ratings = session[:ratings]
+    else
+        if session[:ratings] 
+            @chosen_ratings = session[:ratings]
+        else
+            @chosen_ratings = @all_ratings
+        end
+    end
+    
     
     #order movies and highlight the header indicated by the clicked parameter
     case params[:clicked]
     when 'title'
-        @is_title_hilite = "hilite"
-        @movies = Movie.where(rating: @chosen_ratings).order('title')
+        session[:is_title_hilite] = "hilite"
+        session[:clicked] = 'title'
     when'release'
-        @is_release_hilite = "hilite"
-        @movies = Movie.where(rating: @chosen_ratings).order('release_date')
-    else
-        @movies = Movie.where(rating: @chosen_ratings)
+        session[:is_release_hilite] = "hilite"
+        session[:clicked] = 'release_date'
     end
     
+    if not session[:clicked]
+        session[:clicked] = 'id'
+    end
+    
+    @is_title_hilite = session[:is_title_hilite]
+    @is_release_hilite = session[:is_release_hilite]
+    
+    @movies = Movie.where(rating: @chosen_ratings).order(session[:clicked])
   end
 
   def new
@@ -63,7 +81,7 @@ class MoviesController < ApplicationController
     if params[:ratings]
         params[:ratings].keys
     else
-        @all_ratings
+        nil
     end
   end
 end
