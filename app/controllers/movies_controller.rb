@@ -32,9 +32,11 @@ class MoviesController < ApplicationController
     case params[:clicked]
     when 'title'
         session[:is_title_hilite] = "hilite"
+        session[:is_release_hilite] = ""
         session[:clicked] = 'title'
     when'release'
         session[:is_release_hilite] = "hilite"
+        session[:is_title_hilite] = ""
         session[:clicked] = 'release_date'
     end
     
